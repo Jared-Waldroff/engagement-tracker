@@ -1,0 +1,25 @@
+<div class="donut-container card">
+  <h3 class="section-title">Budget Status</h3>
+  <div class="donut-layout">
+    <div class="donut" [style.background]="segments">
+      <div class="donut-hole">
+        <span class="donut-total">{{ total }}</span>
+        <span class="donut-label">Total</span>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend-item">
+        <span class="dot dot-success"></span>
+        <span>On Track ({{ onTrack }})</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot dot-warning"></span>
+        <span>At Risk ({{ atRisk }})</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot dot-danger"></span>
+        <span>Over Budget ({{ overBudget }})</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@use '../../../../theme/variables' as *;
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-md;
+  margin-bottom: $space-lg;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.chart-row { margin-bottom: $space-lg; }

@@ -1,0 +1,35 @@
+<div class="content-container">
+  <h2 class="page-title">Dashboard</h2>
+
+  <app-loading-skeleton *ngIf="isLoading" type="cards" [rows]="4"></app-loading-skeleton>
+  <app-error-state *ngIf="error" [message]="error" (retry)="onRetry()"></app-error-state>
+
+  <ng-container *ngIf="dashboard && !isLoading && !error">
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+      <app-stat-card label="Total Engagements" [value]="dashboard.totalEngagements"
+                     icon="folder" color="#1a2744"></app-stat-card>
+      <app-stat-card label="Active" [value]="dashboard.activeEngagements"
+                     icon="trending_up" color="#5b9bd5"></app-stat-card>
+      <app-stat-card label="Total Hours" [value]="dashboard.totalHoursLogged + ' / ' + dashboard.totalBudgetHours"
+                     icon="schedule" color="#1a2744"></app-stat-card>
+      <app-stat-card label="Utilization" [value]="dashboard.overallUtilizationPercent + '%'"
+                     icon="speed" [color]="dashboard.overallUtilizationPercent >= 100 ? '#c0392b' : dashboard.overallUtilizationPercent >= 80 ? '#f39c12' : '#27ae60'"></app-stat-card>
+    </div>
+
+    <!-- Budget Donut -->
+    <div class="chart-row">
+      <app-budget-donut
+        [onTrack]="dashboard.engagementsOnTrack"
+        [atRisk]="dashboard.engagementsAtRisk"
+        [overBudget]="dashboard.engagementsOverBudget">
+      </app-budget-donut>
+    </div>
+
+    <!-- Top Engagements -->
+    <app-top-engagements-table
+      [engagements]="dashboard.topEngagements"
+      (rowClick)="onEngagementClick($event)">
+    </app-top-engagements-table>
+  </ng-container>
+</div>

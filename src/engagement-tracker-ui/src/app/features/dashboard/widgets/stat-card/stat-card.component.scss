@@ -1,0 +1,5 @@
+@use '../../../../../theme/variables' as *;
+
+.stat-card { padding: $space-md; }
+.stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: $space-sm; }
+.stat-value { font-size: 28px; font-weight: 700; color: $bdo-navy; }

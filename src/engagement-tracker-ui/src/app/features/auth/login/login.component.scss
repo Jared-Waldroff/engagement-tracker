@@ -1,0 +1,41 @@
+@use '../../../../theme/variables' as *;
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: $bdo-navy;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: $space-lg;
+}
+
+mat-card-title { color: $bdo-navy; font-size: 24px !important; }
+
+.full-width { width: 100%; }
+
+.login-button { margin-top: $space-md; height: 48px; font-size: 16px; }
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $bdo-danger;
+  margin-bottom: $space-sm;
+  font-size: 14px;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.demo-credentials {
+  margin-top: $space-lg;
+  padding-top: $space-md;
+  border-top: 1px solid #eee;
+  font-size: 12px;
+  color: #888;
+  p { margin: 2px 0; }
+  .label { margin-bottom: 4px; }
+}
