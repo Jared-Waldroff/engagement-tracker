@@ -1,0 +1,73 @@
+<div class="content-container">
+  <div class="page-header">
+    <h2 class="page-title">Engagements</h2>
+    <button mat-raised-button color="primary" *ngIf="canCreate" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon> New Engagement
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Status</mat-label>
+      <mat-select [(value)]="statusFilter" (selectionChange)="onStatusChange()">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Client or engagement name..."
+             (input)="onSearchChange($any($event.target).value)">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!-- Loading -->
+  <app-loading-skeleton *ngIf="loading$ | async" type="table" [rows]="6"></app-loading-skeleton>
+
+  <!-- Error -->
+  <app-error-state *ngIf="error" [message]="error" (retry)="onRetry()"></app-error-state>
+
+  <!-- Data -->
+  <ng-container *ngIf="(engagements$ | async) as engagements">
+    <app-empty-state *ngIf="engagements.length === 0 && !(loading$ | async)"
+                     message="No engagements found. Adjust your filters."
+                     icon="folder_off">
+    </app-empty-state>
+
+    <div class="card" *ngIf="engagements.length > 0">
+      <table mat-table [dataSource]="engagements" class="full-width">
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef>Client</th>
+          <td mat-cell *matCellDef="let e">{{ e.clientName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Engagement</th>
+          <td mat-cell *matCellDef="let e">{{ e.title }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let e"><app-status-badge [status]="e.status"></app-status-badge></td>
+        </ng-container>
+        <ng-container matColumnDef="utilization">
+          <th mat-header-cell *matHeaderCellDef>Budget</th>
+          <td mat-cell *matCellDef="let e">
+            <app-budget-progress-bar [utilization]="e.budgetUtilizationPercent"></app-budget-progress-bar>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="managerName">
+          <th mat-header-cell *matHeaderCellDef class="hide-tablet">Manager</th>
+          <td mat-cell *matCellDef="let e" class="hide-tablet">{{ e.managerName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="startDate">
+          <th mat-header-cell *matHeaderCellDef class="hide-tablet">Start Date</th>
+          <td mat-cell *matCellDef="let e" class="hide-tablet">{{ e.startDate | date:'mediumDate' }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="onRowClick(row)" class="clickable-row"></tr>
+      </table>
+    </div>
+  </ng-container>
+</div>

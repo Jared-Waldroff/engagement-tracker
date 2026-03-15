@@ -1,0 +1,28 @@
+@use '../../../../theme/variables' as *;
+
+.back-button { margin-bottom: $space-sm; }
+.subtitle { color: #666; margin-top: -8px; margin-bottom: $space-md; }
+
+.detail-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: $space-lg; flex-wrap: wrap; gap: $space-md;
+}
+
+.header-actions {
+  display: flex; align-items: center; gap: $space-sm; flex-wrap: wrap;
+}
+
+.manager-label { font-size: 14px; color: #666; }
+
+.budget-card { margin-bottom: $space-lg; }
+
+.budget-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: $space-md; margin-bottom: $space-md;
+  @media (max-width: $breakpoint-tablet) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.budget-value { font-size: 18px; font-weight: 600; color: $bdo-navy; margin: 4px 0 0; }
+
+.card { margin-bottom: $space-md; }
+.full-width { width: 100%; }

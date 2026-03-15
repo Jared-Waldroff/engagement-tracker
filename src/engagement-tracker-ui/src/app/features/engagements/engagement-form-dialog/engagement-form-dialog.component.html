@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+    <!-- Create-only fields -->
+    <mat-form-field appearance="outline" *ngIf="!isEdit" class="full-width">
+      <mat-label>Client</mat-label>
+      <mat-select formControlName="clientId">
+        <mat-option *ngFor="let c of data.clients" [value]="c.id">{{ c.name }}</mat-option>
+      </mat-select>
+      <mat-error>Client is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+      <mat-error>Title is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+      <mat-error>Description is required</mat-error>
+    </mat-form-field>
+
+    <!-- Edit-only: Status -->
+    <mat-form-field appearance="outline" *ngIf="isEdit" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Budget Hours</mat-label>
+        <input matInput type="number" formControlName="budgetHours">
+        <mat-error>Must be at least 1</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Hourly Rate ($)</mat-label>
+        <input matInput type="number" formControlName="hourlyRate">
+        <mat-error>Must be at least 1</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" *ngIf="!isEdit">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error>Start date is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>End Date (optional)</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()"
+          [disabled]="form.invalid || isSubmitting">
+    {{ isEdit ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>

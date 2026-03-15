@@ -1,0 +1,6 @@
+@use '../../../../theme/variables' as *;
+
+.form-grid { display: flex; flex-direction: column; min-width: 500px; }
+.full-width { width: 100%; }
+.row { display: flex; gap: $space-md; }
+.row mat-form-field { flex: 1; }

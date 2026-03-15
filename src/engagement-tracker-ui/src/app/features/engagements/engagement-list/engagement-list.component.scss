@@ -1,0 +1,15 @@
+@use '../../../../theme/variables' as *;
+
+.page-header { display: flex; justify-content: space-between; align-items: center; }
+
+.filters { display: flex; gap: $space-md; margin-bottom: $space-md; }
+.filter-field { width: 200px; }
+.search-field { flex: 1; max-width: 400px; }
+
+.full-width { width: 100%; }
+.clickable-row { cursor: pointer; }
+.clickable-row:hover { background: rgba(0, 0, 0, 0.04); }
+
+@media (max-width: $breakpoint-tablet) {
+  .hide-tablet { display: none; }
+}
