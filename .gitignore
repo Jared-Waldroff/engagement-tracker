@@ -49,9 +49,17 @@ yarn-error.log*
 ## Docker
 docker/data/
 
+## Database
+*.db
+*.db-shm
+*.db-wal
+
 ## Environment
 .env
 *.local
+
+## Logs
+logs/
 
 ## macOS
 .DS_Store

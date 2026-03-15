@@ -27,7 +27,14 @@ public class DbSeeder
     /// </summary>
     public async Task SeedAsync()
     {
-        await _context.Database.MigrateAsync();
+        if (_context.Database.IsSqlite())
+        {
+            await _context.Database.EnsureCreatedAsync();
+        }
+        else
+        {
+            await _context.Database.MigrateAsync();
+        }
 
         if (await _context.Users.AnyAsync())
         {

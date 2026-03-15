@@ -19,15 +19,27 @@ namespace EngagementTracker.Api.Extensions;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers the MySQL database context using the connection string from configuration.
+    /// Registers the database context. Uses SQLite for Development, MySQL for Production.
+    /// Set "DatabaseProvider" to "Sqlite" or "MySql" in appsettings to override.
     /// </summary>
     public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         string connectionString = configuration.GetConnectionString("Default")
             ?? throw new InvalidOperationException("Connection string 'Default' is not configured.");
 
+        string provider = configuration["DatabaseProvider"] ?? "Sqlite";
+
         services.AddDbContext<AppDbContext>(options =>
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        {
+            if (provider.Equals("MySql", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            }
+            else
+            {
+                options.UseSqlite(connectionString);
+            }
+        });
 
         services.AddScoped<DbSeeder>();
 

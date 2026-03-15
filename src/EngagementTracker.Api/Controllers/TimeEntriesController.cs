@@ -11,7 +11,7 @@ namespace EngagementTracker.Api.Controllers;
 /// All endpoints require authentication. Results are filtered by role.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/time-entries")]
 [Authorize]
 [Produces("application/json")]
 public class TimeEntriesController : ControllerBase
