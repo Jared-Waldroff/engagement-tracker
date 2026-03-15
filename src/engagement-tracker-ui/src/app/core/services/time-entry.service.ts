@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -15,7 +15,7 @@ export class TimeEntryService {
   private readonly baseUrl = `${environment.apiUrl}/api/time-entries`;
   private lastEngagementFilter?: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private zone: NgZone) {}
 
   loadTimeEntries(engagementId?: number): void {
     this.loadingSubject.next(true);
@@ -28,11 +28,13 @@ export class TimeEntryService {
 
     this.http.get<TimeEntry[]>(this.baseUrl, { params }).subscribe({
       next: data => {
-        this.timeEntriesSubject.next(data);
-        this.loadingSubject.next(false);
+        this.zone.run(() => {
+          this.timeEntriesSubject.next(data);
+          this.loadingSubject.next(false);
+        });
       },
       error: () => {
-        this.loadingSubject.next(false);
+        this.zone.run(() => this.loadingSubject.next(false));
       }
     });
   }

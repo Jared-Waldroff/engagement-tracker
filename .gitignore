@@ -46,6 +46,9 @@ yarn-error.log*
 .vscode/
 *.swp
 
+## Tooling
+.superpowers/
+
 ## Docker
 docker/data/
 

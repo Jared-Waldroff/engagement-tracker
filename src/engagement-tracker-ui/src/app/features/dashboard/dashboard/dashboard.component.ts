@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { EngagementService } from '../../../core/services/engagement.service';
 import { Dashboard, EngagementSummary } from '../../../core/models';
@@ -16,7 +16,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private engagementService: EngagementService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -38,10 +39,12 @@ export class DashboardComponent implements OnInit {
       next: data => {
         this.dashboard = data;
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.error = 'Failed to load dashboard. Please try again.';
         this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }

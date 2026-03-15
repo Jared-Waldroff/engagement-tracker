@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EngagementService } from '../../../core/services/engagement.service';
@@ -30,7 +30,8 @@ export class EngagementDetailComponent implements OnInit {
     private router: Router,
     private engagementService: EngagementService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -76,10 +77,12 @@ export class EngagementDetailComponent implements OnInit {
       next: data => {
         this.engagement = data;
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.error = 'Failed to load engagement details.';
         this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }

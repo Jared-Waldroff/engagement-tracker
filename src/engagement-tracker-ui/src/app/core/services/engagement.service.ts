@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -18,7 +18,7 @@ export class EngagementService {
 
   private readonly baseUrl = `${environment.apiUrl}/api/engagements`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private zone: NgZone) {}
 
   loadEngagements(filters?: EngagementFilters): void {
     this.loadingSubject.next(true);
@@ -32,11 +32,13 @@ export class EngagementService {
 
     this.http.get<EngagementSummary[]>(this.baseUrl, { params }).subscribe({
       next: data => {
-        this.engagementsSubject.next(data);
-        this.loadingSubject.next(false);
+        this.zone.run(() => {
+          this.engagementsSubject.next(data);
+          this.loadingSubject.next(false);
+        });
       },
       error: () => {
-        this.loadingSubject.next(false);
+        this.zone.run(() => this.loadingSubject.next(false));
       }
     });
   }
