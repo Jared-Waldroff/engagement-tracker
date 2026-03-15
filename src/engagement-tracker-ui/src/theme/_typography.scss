@@ -1,0 +1,29 @@
+@use './variables' as *;
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $bdo-navy;
+  margin-bottom: $space-md;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: $bdo-navy;
+  margin-bottom: $space-sm;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: $bdo-navy;
+}
