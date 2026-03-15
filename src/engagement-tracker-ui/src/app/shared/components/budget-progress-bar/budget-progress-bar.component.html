@@ -1,0 +1,4 @@
+<div class="progress-container">
+  <div class="progress-bar" [ngClass]="colorClass" [style.width.%]="clampedWidth"></div>
+</div>
+<span class="progress-label">{{ utilization | number:'1.0-1' }}%</span>

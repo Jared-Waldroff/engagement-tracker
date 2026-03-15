@@ -1,0 +1,23 @@
+@use '../../../../theme/variables' as *;
+
+:host { display: flex; align-items: center; gap: 8px; }
+
+.progress-container {
+  flex: 1;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.bar-success { background: $bdo-success; }
+.bar-warning { background: $bdo-warning; }
+.bar-danger { background: $bdo-danger; }
+
+.progress-label { font-size: 13px; font-weight: 500; min-width: 45px; text-align: right; }

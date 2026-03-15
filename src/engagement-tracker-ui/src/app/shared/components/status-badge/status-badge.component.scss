@@ -1,0 +1,17 @@
+@use 'sass:color';
+@use '../../../../theme/variables' as *;
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-active, .badge-ontrack { background: rgba($bdo-blue, 0.15); color: $bdo-blue; }
+.badge-planning { background: #eee; color: #666; }
+.badge-onhold, .badge-atrisk { background: rgba($bdo-warning, 0.15); color: color.adjust($bdo-warning, $lightness: -10%); }
+.badge-completed { background: rgba($bdo-success, 0.15); color: $bdo-success; }
+.badge-cancelled, .badge-overbudget { background: rgba($bdo-danger, 0.15); color: $bdo-danger; }
