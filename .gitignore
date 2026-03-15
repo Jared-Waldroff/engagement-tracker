@@ -1,0 +1,58 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstats
+*.swp
+*~
+project.lock.json
+.vs/
+artifacts/
+
+## NuGet
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+## User-specific files
+*.rsuser
+*.sln.docstats
+
+## Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+
+## Node / Angular
+node_modules/
+dist/
+.angular/
+.sass-cache/
+*.js.map
+npm-debug.log*
+yarn-error.log*
+
+## IDE
+.idea/
+.vscode/
+*.swp
+
+## Docker
+docker/data/
+
+## Environment
+.env
+*.local
+
+## macOS
+.DS_Store
+Thumbs.db
