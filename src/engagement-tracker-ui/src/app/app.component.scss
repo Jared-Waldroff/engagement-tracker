@@ -1,0 +1,42 @@
+@use '../theme/variables' as *;
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 32px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+
+  a {
+    color: rgba(255, 255, 255, 0.8);
+    mat-icon { margin-right: 4px; font-size: 18px; height: 18px; width: 18px; }
+  }
+
+  .active-link {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.spacer { flex: 1; }
+
+.user-info {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-right: 8px;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .nav-links a span { display: none; }
+  .user-info { display: none; }
+  .brand { font-size: 14px; margin-right: 16px; }
+}

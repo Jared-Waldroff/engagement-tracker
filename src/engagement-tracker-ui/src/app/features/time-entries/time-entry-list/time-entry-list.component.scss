@@ -1,0 +1,6 @@
+@use '../../../../theme/variables' as *;
+
+.page-header { display: flex; justify-content: space-between; align-items: center; }
+.filters { margin-bottom: $space-md; }
+.filter-field { width: 350px; }
+.full-width { width: 100%; }

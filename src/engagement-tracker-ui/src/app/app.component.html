@@ -1,0 +1,27 @@
+<!-- Top Nav — hidden on login page -->
+<mat-toolbar *ngIf="!isLoginPage() && (authService.isAuthenticated$ | async)" color="primary" class="top-nav">
+  <span class="brand">Engagement Tracker</span>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/dashboard" routerLinkActive="active-link">
+      <mat-icon>dashboard</mat-icon> Dashboard
+    </a>
+    <a mat-button routerLink="/engagements" routerLinkActive="active-link">
+      <mat-icon>folder</mat-icon> Engagements
+    </a>
+    <a mat-button routerLink="/time-entries" routerLinkActive="active-link">
+      <mat-icon>schedule</mat-icon> Time Entries
+    </a>
+  </nav>
+
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="authService.currentUser$ | async as user">
+    <span class="user-info">{{ user.firstName }} ({{ user.role }})</span>
+    <button mat-icon-button (click)="onLogout()" aria-label="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

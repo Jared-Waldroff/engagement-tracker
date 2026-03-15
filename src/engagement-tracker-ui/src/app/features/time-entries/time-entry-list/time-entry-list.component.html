@@ -1,0 +1,56 @@
+<div class="content-container">
+  <div class="page-header">
+    <h2 class="page-title">Time Entries</h2>
+    <button mat-fab color="primary" (click)="openLogTimeDialog()" aria-label="Log time">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <!-- Filter -->
+  <div class="filters">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Engagement</mat-label>
+      <mat-select [value]="selectedEngagementId"
+                  (selectionChange)="onEngagementFilter($event.value)">
+        <mat-option [value]="undefined">All Engagements</mat-option>
+        <mat-option *ngFor="let e of engagements" [value]="e.id">
+          {{ e.clientName }} — {{ e.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <app-loading-skeleton *ngIf="loading$ | async" type="table" [rows]="8"></app-loading-skeleton>
+
+  <ng-container *ngIf="(timeEntries$ | async) as entries">
+    <app-empty-state *ngIf="entries.length === 0 && !(loading$ | async)"
+                     message="No time entries found." icon="schedule"></app-empty-state>
+
+    <div class="card" *ngIf="entries.length > 0">
+      <table mat-table [dataSource]="entries" class="full-width">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let t">{{ t.date | date:'mediumDate' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="engagementTitle">
+          <th mat-header-cell *matHeaderCellDef>Engagement</th>
+          <td mat-cell *matCellDef="let t">{{ t.engagementTitle }}</td>
+        </ng-container>
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let t">{{ t.userName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="hours">
+          <th mat-header-cell *matHeaderCellDef>Hours</th>
+          <td mat-cell *matCellDef="let t">{{ t.hours | number:'1.1-1' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let t">{{ t.description }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </ng-container>
+</div>

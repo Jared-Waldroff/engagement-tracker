@@ -1,0 +1,7 @@
+@use '../../../../theme/variables' as *;
+
+.form-grid { display: flex; flex-direction: column; min-width: 400px; }
+.full-width { width: 100%; }
+.row { display: flex; gap: $space-md; }
+.row mat-form-field { flex: 1; }
+.preselected { margin-bottom: $space-md; p { font-weight: 500; color: $bdo-navy; } }
