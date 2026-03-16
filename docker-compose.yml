@@ -1,0 +1,53 @@
+# docker-compose.yml
+# Runs the complete Engagement Tracker stack locally.
+# Usage: docker compose up --build
+# The API waits for MySQL to be healthy before starting.
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: engagement-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-localdev}
+      MYSQL_DATABASE: engagement_tracker
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: src/EngagementTracker.Api/Dockerfile
+    container_name: engagement-api
+    ports:
+      - "5000:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DatabaseProvider: MySql
+      ConnectionStrings__Default: "Server=db;Port=3306;Database=engagement_tracker;User=root;Password=${DB_ROOT_PASSWORD:-localdev}"
+      Jwt__Secret: ${JWT_SECRET:-dev-secret-key-minimum-32-characters-long-for-hmac-sha256}
+      Jwt__Issuer: EngagementTracker
+      Jwt__Audience: EngagementTracker
+      Jwt__ExpiresInMinutes: 60
+      ASPNETCORE_ENVIRONMENT: Development
+
+  ui:
+    build:
+      context: ./src/engagement-tracker-ui
+      dockerfile: Dockerfile
+    container_name: engagement-ui
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+volumes:
+  db-data:
